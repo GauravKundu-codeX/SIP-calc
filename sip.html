@@ -7,6 +7,41 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <script>
+  const params = new URLSearchParams(window.location.search);
+  const tokenFromURL = params.get("access");
+  const storedToken = localStorage.getItem("sip_access_token");
+
+  // First-time valid access
+  if (tokenFromURL && !storedToken) {
+    localStorage.setItem("sip_access_token", tokenFromURL);
+  }
+
+  // No access at all
+  if (!tokenFromURL && !storedToken) {
+    document.body.innerHTML = `
+      <div style="font-family:Arial;text-align:center;margin-top:20vh;">
+        <h2>Access Restricted</h2>
+        <p>Please purchase access to use this SIP Calculator.</p>
+        <a href="index.html">Go to Payment Page</a>
+      </div>
+    `;
+    throw new Error("Access denied");
+  }
+
+  // Token mismatch (shared link)
+  if (tokenFromURL && storedToken && tokenFromURL !== storedToken) {
+    document.body.innerHTML = `
+      <div style="font-family:Arial;text-align:center;margin-top:20vh;">
+        <h2>Invalid Access</h2>
+        <p>This access link has already been used on another device.</p>
+      </div>
+    `;
+    throw new Error("Token mismatch");
+  }
+</script>
+
+    
     <div class="container">
         <h1>SIP Calculator</h1>
         <form id="sip-form">
@@ -33,5 +68,7 @@
         <p class="disclaimer">This calculator is for educational purposes only.</p>
     </div>
     <script src="script.js"></script>
+
 </body>
+
 </html>
