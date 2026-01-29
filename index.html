@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Calculator - One Device Access</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        h1, h2, h3 {
+            color: #007bff;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            color: white;
+        }
+        .hero p {
+            font-size: 1.2rem;
+        }
+        .price {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+        }
+        .step-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .payment {
+            text-align: center;
+        }
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background-color: #e9ecef;
+            border: 2px dashed #ccc;
+            display: inline-block;
+            margin: 20px 0;
+            text-align: center;
+            line-height: 200px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+        .upi-id {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .notes ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 20px;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .steps {
+                flex-direction: column;
+            }
+            .qr-placeholder {
+                width: 150px;
+                height: 150px;
+                line-height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero card">
+            <h1>SIP Calculator – One Device Access</h1>
+            <p>Calculate your mutual fund SIP returns instantly.</p>
+        </section>
+
+        <!-- Price Section -->
+        <section class="card">
+            <div class="price">
+                Price: ₹99 (One-time)
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="card">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <p>Pay ₹99 using UPI QR</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <p>Mention your email in payment note</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <p>Email payment screenshot</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <p>Receive private access link</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Section -->
+        <section class="card payment">
+            <h2>Payment</h2>
+            <img src="qr.jpeg" alt="UPI QR Code" class="qr-placeholder">
+            <p class="upi-id">UPI ID: example@upi</p>
+        </section>
+
+        <!-- Important Notes Section -->
+        <section class="card notes">
+            <h2>Important Notes</h2>
+            <ul>
+                <li>Access valid for one device only</li>
+                <li>Do not clear browser data</li>
+                <li>No refunds after access link is issued</li>
+            </ul>
+        </section>
+
+        <!-- Footer Disclaimer -->
+        <footer class="footer">
+            <p>This SIP calculator is for educational purposes only. Actual returns may vary.</p>
+        </footer>
+    </div>
+
+    <!-- Optional JavaScript for smooth scrolling (if needed, e.g., for anchor links) -->
+    <script>
+        // Smooth scrolling for any anchor links if added later
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
