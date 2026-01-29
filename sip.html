@@ -1,74 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIP Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIP Calculator</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <script>
+
+<!-- 🔒 ACCESS CONTROL SCRIPT -->
+<script>
   const params = new URLSearchParams(window.location.search);
   const tokenFromURL = params.get("access");
   const storedToken = localStorage.getItem("sip_access_token");
 
-  // First-time valid access
+  let accessGranted = false;
+
+  // First-time access
   if (tokenFromURL && !storedToken) {
     localStorage.setItem("sip_access_token", tokenFromURL);
+    accessGranted = true;
+  }
+  // Returning user on same device
+  else if (!tokenFromURL && storedToken) {
+    accessGranted = true;
+  }
+  // Same token reused on same device
+  else if (tokenFromURL && storedToken && tokenFromURL === storedToken) {
+    accessGranted = true;
   }
 
-  // No access at all
-  if (!tokenFromURL && !storedToken) {
-    document.body.innerHTML = `
-      <div style="font-family:Arial;text-align:center;margin-top:20vh;">
-        <h2>Access Restricted</h2>
-        <p>Please purchase access to use this SIP Calculator.</p>
-        <a href="index.html">Go to Payment Page</a>
-      </div>
-    `;
-    throw new Error("Access denied");
-  }
-
-  // Token mismatch (shared link)
-  if (tokenFromURL && storedToken && tokenFromURL !== storedToken) {
-    document.body.innerHTML = `
-      <div style="font-family:Arial;text-align:center;margin-top:20vh;">
-        <h2>Invalid Access</h2>
-        <p>This access link has already been used on another device.</p>
-      </div>
-    `;
-    throw new Error("Token mismatch");
+  // If access NOT granted → block everything
+  if (!accessGranted) {
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.innerHTML = `
+        <div style="font-family:Arial;text-align:center;margin-top:20vh;">
+          <h2>Access Restricted</h2>
+          <p>Please purchase access to use this SIP Calculator.</p>
+          <a href="index.html">Go to Payment Page</a>
+        </div>
+      `;
+    });
+  } else {
+    // Clean URL (remove ?access=XXXX)
+    if (tokenFromURL) {
+      window.history.replaceState({}, document.title, "sip.html");
+    }
   }
 </script>
 
-    
-    <div class="container">
-        <h1>SIP Calculator</h1>
-        <form id="sip-form">
-            <div class="input-group">
-                <label for="monthly-investment">Monthly Investment Amount (₹)</label>
-                <input type="number" id="monthly-investment" placeholder="e.g., 5000" min="1" required>
-            </div>
-            <div class="input-group">
-                <label for="annual-return">Expected Annual Return Rate (%)</label>
-                <input type="number" id="annual-return" placeholder="e.g., 12" min="0" step="0.01" required>
-            </div>
-            <div class="input-group">
-                <label for="duration">Investment Duration (Years)</label>
-                <input type="number" id="duration" placeholder="e.g., 10" min="1" required>
-            </div>
-            <button type="button" id="calculate-btn">Calculate</button>
-        </form>
-        <div id="results" class="results hidden">
-            <h2>Results</h2>
-            <p><strong>Total Invested Amount:</strong> ₹<span id="total-invested"></span></p>
-            <p><strong>Estimated Returns:</strong> ₹<span id="estimated-returns"></span></p>
-            <p><strong>Total Maturity Value:</strong> ₹<span id="maturity-value"></span></p>
-        </div>
-        <p class="disclaimer">This calculator is for educational purposes only.</p>
+<!-- ✅ APP WRAPPER -->
+<div id="app">
+  <div class="container">
+    <h1>SIP Calculator</h1>
+
+    <form id="sip-form">
+      <div class="input-group">
+        <label for="monthly-investment">Monthly Investment Amount (₹)</label>
+        <input type="number" id="monthly-investment" placeholder="e.g., 5000" min="1" required>
+      </div>
+
+      <div class="input-group">
+        <label for="annual-return">Expected Annual Return Rate (%)</label>
+        <input type="number" id="annual-return" placeholder="e.g., 12" min="0" step="0.01" required>
+      </div>
+
+      <div class="input-group">
+        <label for="duration">Investment Duration (Years)</label>
+        <input type="number" id="duration" placeholder="e.g., 10" min="1" required>
+      </div>
+
+      <button type="button" id="calculate-btn">Calculate</button>
+    </form>
+
+    <div id="results" class="results hidden">
+      <h2>Results</h2>
+      <p><strong>Total Invested Amount:</strong> ₹<span id="total-invested"></span></p>
+      <p><strong>Estimated Returns:</strong> ₹<span id="estimated-returns"></span></p>
+      <p><strong>Total Maturity Value:</strong> ₹<span id="maturity-value"></span></p>
     </div>
-    <script src="script.js"></script>
 
+    <p class="disclaimer">This calculator is for educational purposes only.</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
-
 </html>
